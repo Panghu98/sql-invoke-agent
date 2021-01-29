@@ -14,10 +14,12 @@ public class ResultDTO<T> {
     private String code;
     private String message;
     private T data;
+    private Boolean success;
 
     public ResultDTO() {
         this.code = "200";
         this.message = "操作成功";
+        this.success = true;
     }
 
     /**
@@ -25,8 +27,9 @@ public class ResultDTO<T> {
      * @param code 错误码 与 CodeMsg对应
      * @param message 错误提示信息
      */
-    public ResultDTO(String code,String message){
+    public ResultDTO(String code,String message,boolean success){
         this.code = code;
+        this.success = success;
         this.message = message;
     }
 
@@ -34,6 +37,7 @@ public class ResultDTO<T> {
         this.code="200";
         this.message="success";
         this.data = data;
+        this.success = true;
     }
 
     private ResultDTO(ErrorTypeEnum codeMsg) {
@@ -54,12 +58,12 @@ public class ResultDTO<T> {
     }
 
     public static <T> ResultDTO<T> error(AgentException exception){
-        return new ResultDTO<T>(exception.getCode(),exception.getMessage());
+        return new ResultDTO<T>(exception.getCode(),exception.getMessage(),false);
     }
 
 
     public static  ResultDTO<String> error(String code,String msg){
-        return new ResultDTO<>(code,msg);
+        return new ResultDTO<>(code,msg,false);
     }
 }
 

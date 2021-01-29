@@ -1,4 +1,4 @@
-package com.panghu.service.docker;
+package com.panghu.manager.sql;
 
 /**
  * @author: panghu
@@ -14,21 +14,28 @@ import com.github.dockerjava.api.model.Info;
 import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.core.DockerClientBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import static com.github.dockerjava.api.model.HostConfig.newHostConfig;
 
 @Slf4j
-public class DockerClientService {
+@Component
+public class DockerClientManager {
+
+    public DockerClient connectDocker(String host) {
+        return connectDocker(host,2375);
+    }
+
     /**
      * 连接docker服务器
      * @return
      */
-    public DockerClient connectDocker(){
-        DockerClient dockerClient = DockerClientBuilder.getInstance("tcp://192.168.137.12:2375").build();
+    public DockerClient connectDocker(String host,Integer port){
+        DockerClient dockerClient = DockerClientBuilder.getInstance("tcp://" + host + ":" +port).build();
         Info info = dockerClient.infoCmd().exec();
         String infoStr = JSONObject.toJSONString(info);
-        System.out.println("docker的环境信息如下：=================");
-        System.out.println(info);
+        log.info("docker的环境信息如下：=================");
+        log.info(infoStr);
         return dockerClient;
     }
 

@@ -1,5 +1,10 @@
 package com.panghu.controller;
 
+import com.panghu.common.ResultDTO;
+import com.panghu.controller.param.docker.ContainerCreateParam;
+import com.panghu.service.docker.DockerInvokerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DockerInvokerController {
 
+    @Autowired
+    private DockerInvokerService dockerInvokerService;
 
+    @RequestMapping("/container/create")
+    public ResultDTO<String> createContainer(@RequestBody ContainerCreateParam param) {
+        String host = param.getHost();
+        String containerName = param.getContainerName();
+        String imageName = param.getImageName();
+        return dockerInvokerService.createContainer(host,containerName,imageName);
+    }
 
 }
