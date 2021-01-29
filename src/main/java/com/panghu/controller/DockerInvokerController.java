@@ -1,6 +1,7 @@
 package com.panghu.controller;
 
 import com.panghu.common.ResultDTO;
+import com.panghu.controller.param.docker.ContainerCreateAndStartParam;
 import com.panghu.controller.param.docker.ContainerCreateParam;
 import com.panghu.service.docker.DockerInvokerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class DockerInvokerController {
         String containerName = param.getContainerName();
         String imageName = param.getImageName();
         return dockerInvokerService.createContainer(host,containerName,imageName);
+    }
+
+    @RequestMapping("/container/createAndStart")
+    public ResultDTO<Void> createAndStartContainer(@RequestBody ContainerCreateAndStartParam param) {
+        String host = param.getHost();
+        String containerName = param.getContainerName();
+        String imageName = param.getImageName();
+        return dockerInvokerService.createAndStartContainer(host,containerName,imageName);
     }
 
 }

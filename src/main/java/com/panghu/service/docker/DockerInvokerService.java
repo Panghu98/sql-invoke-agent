@@ -30,8 +30,24 @@ public class DockerInvokerService {
      */
     public ResultDTO<String> createContainer(String host,String containerName,String imageName) {
         DockerClient dockerClient = dockerClientManager.connectDocker(host);
-        CreateContainerResponse createContainerResponse = dockerClientManager.createContainers(dockerClient, containerName, imageName);
+        CreateContainerResponse createContainerResponse = dockerClientManager.
+                createContainers(dockerClient, containerName, imageName);
         return ResultDTO.successData(createContainerResponse.getId());
+    }
+
+    public ResultDTO<Void> createAndStartContainer(String host,String containerName,String imageName) {
+        DockerClient dockerClient = dockerClientManager.connectDocker(host);
+        CreateContainerResponse createContainerResponse = dockerClientManager.
+                createContainers(dockerClient, containerName, imageName);
+        String id = createContainerResponse.getId();
+        startContainer(dockerClient,id);
+
+        return ResultDTO.successData(null);
+    }
+
+
+    private void startContainer(DockerClient client,String containerId) {
+        dockerClientManager.startContainer(client, containerId);
     }
 
 }

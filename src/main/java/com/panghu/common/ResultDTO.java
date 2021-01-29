@@ -2,6 +2,7 @@ package com.panghu.common;
 
 import com.panghu.exception.AgentException;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @author: panghu
@@ -10,6 +11,7 @@ import lombok.Data;
  * @Modified By:
  */
 @Data
+@Accessors(chain = true)
 public class ResultDTO<T> {
     private String code;
     private String message;
