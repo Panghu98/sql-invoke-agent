@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
  * @Modified By:
  */
 @Data
+// 支持setter的链式调用
 @Accessors(chain = true)
 public class ResultDTO<T> {
     private String code;
