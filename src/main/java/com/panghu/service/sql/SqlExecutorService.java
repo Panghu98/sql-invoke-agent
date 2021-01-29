@@ -1,8 +1,9 @@
-package com.panghu.sql;
+package com.panghu.service.sql;
 
 import com.panghu.common.ErrorTypeEnum;
 import com.panghu.common.SqlScriptEnum;
 import com.panghu.exception.AgentException;
+import com.panghu.manager.sql.ConnectionManager;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
@@ -16,7 +17,7 @@ import java.sql.Statement;
  * @Modified By:
  */
 @Slf4j
-public class SqlExecutor {
+public class SqlExecutorService {
 
     private ConnectionManager connectionManager = new ConnectionManager();
 

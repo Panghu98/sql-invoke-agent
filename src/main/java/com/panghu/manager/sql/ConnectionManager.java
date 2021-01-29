@@ -1,4 +1,4 @@
-package com.panghu.sql;
+package com.panghu.manager.sql;
 
 import lombok.extern.slf4j.Slf4j;
 
