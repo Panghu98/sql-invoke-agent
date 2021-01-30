@@ -7,6 +7,7 @@ import com.panghu.service.docker.DockerInvokerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,7 +23,7 @@ public class DockerInvokerController {
     @Autowired
     private DockerInvokerService dockerInvokerService;
 
-    @RequestMapping("/container/create")
+    @RequestMapping(value = "/container/create",method = RequestMethod.POST)
     public ResultDTO<String> createContainer(@RequestBody ContainerCreateParam param) {
         String host = param.getHost();
         String containerName = param.getContainerName();
@@ -30,12 +31,14 @@ public class DockerInvokerController {
         return dockerInvokerService.createContainer(host,containerName,imageName);
     }
 
-    @RequestMapping("/container/createAndStart")
+    @RequestMapping(value = "/container/createAndStart",method = RequestMethod.POST)
     public ResultDTO<Void> createAndStartContainer(@RequestBody ContainerCreateAndStartParam param) {
         String host = param.getHost();
         String containerName = param.getContainerName();
         String imageName = param.getImageName();
         return dockerInvokerService.createAndStartContainer(host,containerName,imageName);
     }
+
+
 
 }

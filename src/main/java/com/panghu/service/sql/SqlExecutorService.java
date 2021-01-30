@@ -1,10 +1,12 @@
 package com.panghu.service.sql;
 
 import com.panghu.common.ErrorTypeEnum;
+import com.panghu.common.ResultDTO;
 import com.panghu.common.SqlScriptEnum;
 import com.panghu.exception.AgentException;
 import com.panghu.manager.sql.ConnectionManager;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,11 +19,13 @@ import java.sql.Statement;
  * @Modified By:
  */
 @Slf4j
+@Service
 public class SqlExecutorService {
 
-    private ConnectionManager connectionManager = new ConnectionManager();
+    private void doExecuteScript(String host,String username,String password,String script) {
 
-    private boolean executeScript(String script) {
+        ConnectionManager connectionManager = ConnectionManager.newInstance(host, username, password);
+
         //获取连接
         Connection connection = connectionManager.getConnection();
 
@@ -34,7 +38,7 @@ public class SqlExecutorService {
         try {
             statement = connection.createStatement();
             log.info("start invoke script :" + script);
-            return statement.execute(script);
+            statement.execute(script);
         } catch (SQLException sqlException) {
             log.error("Sql script invoke error..");
             log.error(sqlException.getMessage());
@@ -56,9 +60,9 @@ public class SqlExecutorService {
      * @param dbName
      * @return
      */
-    public boolean  createDatabase(String dbName) {
+    public void  createDatabase(String host,String username,String password,String dbName) {
         String script = String.format(SqlScriptEnum.CREATE_DATABASE, dbName);
-        return executeScript(script);
+        doExecuteScript(host, username, password, script);
     }
 
     /**
@@ -66,9 +70,12 @@ public class SqlExecutorService {
      * @param dbName
      * @return
      */
-    public boolean useDatabase(String dbName) {
-        String script = String.format(SqlScriptEnum.USE_DATABASE, dbName);
-        return executeScript(script);
+    public ResultDTO<Void> executeScript(String host, String username, String password, String dbName, String script) {
+        script = String.format(SqlScriptEnum.USE_DATABASE, dbName) + script;
+        doExecuteScript(host, username, password, script);
+
+        return ResultDTO.successData(null);
     }
+
 
 }

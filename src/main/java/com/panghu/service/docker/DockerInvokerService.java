@@ -35,6 +35,13 @@ public class DockerInvokerService {
         return ResultDTO.successData(createContainerResponse.getId());
     }
 
+    /**
+     * 创建并启动容器
+     * @param host
+     * @param containerName
+     * @param imageName
+     * @return
+     */
     public ResultDTO<Void> createAndStartContainer(String host,String containerName,String imageName) {
         DockerClient dockerClient = dockerClientManager.connectDocker(host);
         CreateContainerResponse createContainerResponse = dockerClientManager.
@@ -46,6 +53,11 @@ public class DockerInvokerService {
     }
 
 
+    /**
+     * 启动容器
+     * @param client
+     * @param containerId
+     */
     private void startContainer(DockerClient client,String containerId) {
         dockerClientManager.startContainer(client, containerId);
     }

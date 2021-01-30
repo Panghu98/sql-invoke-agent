@@ -14,18 +14,19 @@ import java.sql.DriverManager;
 @Slf4j
 public class ConnectionManager {
 
-    private String mysqlDriver = "com.mysql.jdbc.Driver";
-    private String newUrl = "jdbc:mysql://localhost:3306/";
-    private String username = "root";
-    private String password = "745920";
+    private final String newUrl;
+    private String username;
+    private String password;
 
-
-    public ConnectionManager() {
-
+    public static ConnectionManager newInstance(String host,String username,String password) {
+        return newInstance(host, username, password);
     }
 
-    public ConnectionManager(String newUrl) {
-        this.newUrl = newUrl;
+
+    private ConnectionManager(String host,String username,String password) {
+        this.newUrl = "jdbc:mysql://" + host +":3306/";
+        this.username = username;
+        this.password = password;
     }
 
     /**
@@ -35,6 +36,7 @@ public class ConnectionManager {
     public Connection getConnection() {
         Connection conn = null;
         try {
+            String mysqlDriver = "com.mysql.jdbc.Driver";
             Class.forName(mysqlDriver);
             conn = DriverManager.getConnection(newUrl, username,  password);
         }catch (Exception e) {
