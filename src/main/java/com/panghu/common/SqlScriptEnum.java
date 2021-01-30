@@ -10,6 +10,6 @@ public interface SqlScriptEnum {
 
     public String CREATE_DATABASE = "create database %s ;";
 
-    public String USE_DATABASE = "use database %s ;";
+    public String USE_DATABASE = "use %s ;";
 
 }

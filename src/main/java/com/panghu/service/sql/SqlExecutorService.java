@@ -6,6 +6,7 @@ import com.panghu.common.SqlScriptEnum;
 import com.panghu.exception.AgentException;
 import com.panghu.manager.sql.ConnectionManager;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -22,9 +23,17 @@ import java.sql.Statement;
 @Service
 public class SqlExecutorService {
 
-    private void doExecuteScript(String host,String username,String password,String script) {
+    @Test
+    public void test() {
+        doExecuteScript("localhost","root","","demo",
+                "create table users (`id`  varchar(64) NOT NULL , `username` varchar(20) NOT NULL , PRIMARY KEY (`id`)) ENGINE=\n" +
+                "InnoDB DEFAULT CHARSET=utf8;");
+    }
 
-        ConnectionManager connectionManager = ConnectionManager.newInstance(host, username, password);
+
+    private void doExecuteScript(String host,String username,String password,String database,String script) {
+
+        ConnectionManager connectionManager = ConnectionManager.newInstance(host, username, password,database);
 
         //获取连接
         Connection connection = connectionManager.getConnection();
@@ -61,8 +70,6 @@ public class SqlExecutorService {
      * @return
      */
     public void  createDatabase(String host,String username,String password,String dbName) {
-        String script = String.format(SqlScriptEnum.CREATE_DATABASE, dbName);
-        doExecuteScript(host, username, password, script);
     }
 
     /**
@@ -71,8 +78,7 @@ public class SqlExecutorService {
      * @return
      */
     public ResultDTO<Void> executeScript(String host, String username, String password, String dbName, String script) {
-        script = String.format(SqlScriptEnum.USE_DATABASE, dbName) + script;
-        doExecuteScript(host, username, password, script);
+        doExecuteScript(host, username, password, dbName,script);
 
         return ResultDTO.successData(null);
     }

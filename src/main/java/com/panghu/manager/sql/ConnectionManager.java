@@ -18,13 +18,13 @@ public class ConnectionManager {
     private String username;
     private String password;
 
-    public static ConnectionManager newInstance(String host,String username,String password) {
-        return newInstance(host, username, password);
+    public static ConnectionManager newInstance(String host,String username,String password,String database) {
+        return new ConnectionManager(host, username, password,database);
     }
 
 
-    private ConnectionManager(String host,String username,String password) {
-        this.newUrl = "jdbc:mysql://" + host +":3306/";
+    private ConnectionManager(String host,String username,String password,String database) {
+        this.newUrl = "jdbc:mysql://" + host +":3306/" + database;
         this.username = username;
         this.password = password;
     }
@@ -37,6 +37,7 @@ public class ConnectionManager {
         Connection conn = null;
         try {
             String mysqlDriver = "com.mysql.jdbc.Driver";
+
             Class.forName(mysqlDriver);
             conn = DriverManager.getConnection(newUrl, username,  password);
         }catch (Exception e) {
