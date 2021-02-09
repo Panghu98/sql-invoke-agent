@@ -11,7 +11,6 @@ import lombok.experimental.Accessors;
  * @Modified By:
  */
 @Data
-// 支持setter的链式调用
 @Accessors(chain = true)
 public class ResultDTO<T> {
     private String code;
@@ -25,11 +24,7 @@ public class ResultDTO<T> {
         this.success = true;
     }
 
-    /**
-     * 用于错误处理
-     * @param code 错误码 与 CodeMsg对应
-     * @param message 错误提示信息
-     */
+
     public ResultDTO(String code,String message,boolean success){
         this.code = code;
         this.success = success;
