@@ -2,11 +2,10 @@ package com.panghu.service.sql;
 
 import com.panghu.common.ErrorTypeEnum;
 import com.panghu.common.ResultDTO;
-import com.panghu.common.SqlScriptEnum;
 import com.panghu.exception.AgentException;
 import com.panghu.manager.sql.ConnectionManager;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
